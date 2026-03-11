@@ -1,0 +1,363 @@
+<!DOCTYPE HTML>
+<!-- saved from url=(0063)https://www.html.am/templates/downloads/bryantsmith/nightbeach/ -->
+<html xmlns:th="http://www.thymeLeaf.org">
+<head>
+    <title>Wildlife Reporter | CS411 Project</title>
+    <link rel="stylesheet" href="" th:href="@{/css/style.css}"/>
+</head>
+
+
+
+<body>
+
+<div id="container">
+        
+
+        
+        <div id="menu">
+            
+        	<ul>
+        <script th:inline="javascript">
+            function Mainpage(){
+                var dynamicValue = /*[[${userId}]]*/ "unknown";
+                console.log("clicked mainpage")
+                return "http://localhost:8080/api/v1/Mainpage/user="+dynamicValue;
+            }
+        </script>
+
+            	<li class="menuitem"><a href="" onClick="document.location.href=Mainpage();return false;">Home</a></li>
+        <script th:inline="javascript">
+            function Query(){
+                var dynamicValue = /*[[${userId}]]*/ "unknown";
+                console.log("clicked query")
+                return "http://localhost:8080/api/v1/Query/user="+dynamicValue;
+            }
+        </script>
+                <li class="menuitem"><a href="" onClick="document.location.href=Query();return false;">Query</a></li>
+        <script th:inline="javascript">
+            function NewReport(){
+                var dynamicValue = /*[[${userId}]]*/ "unknown";
+                console.log("clicked NewReport")
+                return "http://localhost:8080/api/v1/NewReport/user="+dynamicValue;
+            }
+        </script>
+                <li class="menuitem"><a href="" onClick="document.location.href=NewReport();return false;">New Report</a></li>
+        <script th:inline="javascript">
+            function AdvancedQueries(){
+                var dynamicValue = /*[[${userId}]]*/ "unknown";
+                console.log("clicked AdvancedQueries")
+                return "http://localhost:8080/api/v1/AdvancedQueries/user="+dynamicValue;
+            }
+        </script>
+                <li class="menuitem"><a href="" onClick="document.location.href=AdvancedQueries();return false;">Advanced Queries</a></li>
+        <script th:inline="javascript">
+            function map(){
+                var dynamicValue = /*[[${userId}]]*/ "unknown";
+                console.log("clicked map")
+                return "http://localhost:8080/api/v1/myreports/user="+dynamicValue;
+            }
+        </script>
+                <li class="menuitem"><a href="" onClick="document.location.href=map();return false;">My Reports</a></li>
+
+              <li class="menuitem" ><a href="http://localhost:8080/api/v1/Mainpage/user=unknown">Log Out</a></li>
+
+            </ul>
+
+        </div>
+
+        
+        
+        
+
+		<div id="content">
+
+        	<h2>Welcome to the My Reports page, here you can see all the reports you've made, edit and delete them! </h2>
+
+        	<p>&nbsp;</p>
+
+           	<p>&nbsp;</p>
+
+            <h2>You may input the data you wish to query below</h2><p>&nbsp;</p>
+           
+             <p>&nbsp;</p>
+             <!-- <script type="text/javascript">
+                setTimeout(function() {
+                    var dynamicValue = "[[${fuserId}]]"; 
+                    window.location.href = "http://localhost:8080/api/v1/Mainpage/user="+dynamicValue;
+                }, 20); // Redirect after 5 seconds
+            </script> -->
+             <script type="text/javascript">
+                function editrep1(){
+                    var dynamicValue = "[[${rep1}]]"; 
+                    var user = "[[${fuserId}]]";
+                    window.location.href = "http://localhost:8080/api/v1/editrep/userId="+user+"/rep="+dynamicValue;
+                }
+                function delrep1(){
+                    var dynamicValue = "[[${rep1}]]"; 
+                    var user = "[[${fuserId}]]";
+                    window.location.href = "http://localhost:8080/api/v1/delrep/userId="+user+"/rep="+dynamicValue;
+                }
+                function editrep2(){
+                    var dynamicValue = "[[${rep2}]]"; 
+                    var user = "[[${fuserId}]]";
+                    window.location.href = "http://localhost:8080/api/v1/editrep/userId="+user+"/rep="+dynamicValue;
+                }
+                function delrep2(){
+                    var dynamicValue = "[[${rep2}]]"; 
+                    var user = "[[${fuserId}]]";
+                    window.location.href = "http://localhost:8080/api/v1/delrep/userId="+user+"/rep="+dynamicValue;
+                }
+                function editrep3(){
+                    var dynamicValue = "[[${rep3}]]"; 
+                    var user = "[[${fuserId}]]";
+                    window.location.href = "http://localhost:8080/api/v1/editrep/userId="+user+"/rep="+dynamicValue;
+                }
+                function delrep3(){
+                    var dynamicValue = "[[${rep3}]]"; 
+                    var user = "[[${fuserId}]]";
+                    window.location.href = "http://localhost:8080/api/v1/delrep/userId="+user+"/rep="+dynamicValue;
+                }
+                function editrep4(){
+                    var dynamicValue = "[[${rep4}]]"; 
+                    var user = "[[${fuserId}]]";
+                    window.location.href = "http://localhost:8080/api/v1/editrep/userId="+user+"/rep="+dynamicValue;
+                }
+                function delrep4(){
+                    var dynamicValue = "[[${rep4}]]"; 
+                    var user = "[[${fuserId}]]";
+                    window.location.href = "http://localhost:8080/api/v1/delrep/userId="+user+"/rep="+dynamicValue;
+                }
+                function editrep5(){
+                    var dynamicValue = "[[${rep5}]]"; 
+                    var user = "[[${fuserId}]]";
+                    window.location.href = "http://localhost:8080/api/v1/editrep/userId="+user+"/rep="+dynamicValue;
+                }
+                function delrep5(){
+                    var dynamicValue = "[[${rep5}]]"; 
+                    var user = "[[${fuserId}]]";
+                    window.location.href = "http://localhost:8080/api/v1/delrep/userId="+user+"/rep="+dynamicValue;
+                }
+                function editrep6(){
+                    var dynamicValue = "[[${rep6}]]"; 
+                    var user = "[[${fuserId}]]";
+                    window.location.href = "http://localhost:8080/api/v1/editrep/userId="+user+"/rep="+dynamicValue;
+                }
+                function delrep6(){
+                    var dynamicValue = "[[${rep6}]]"; 
+                    var user = "[[${fuserId}]]";
+                    window.location.href = "http://localhost:8080/api/v1/delrep/userId="+user+"/rep="+dynamicValue;
+                }
+                function editrep7(){
+                    var dynamicValue = "[[${rep7}]]"; 
+                    var user = "[[${fuserId}]]";
+                    window.location.href = "http://localhost:8080/api/v1/editrep/userId="+user+"/rep="+dynamicValue;
+                }
+                function delrep7(){
+                    var dynamicValue = "[[${rep7}]]"; 
+                    var user = "[[${fuserId}]]";
+                    window.location.href = "http://localhost:8080/api/v1/delrep/userId="+user+"/rep="+dynamicValue;
+                }
+                function editrep8(){
+                    var dynamicValue = "[[${rep8}]]"; 
+                    var user = "[[${fuserId}]]";
+                    window.location.href = "http://localhost:8080/api/v1/editrep/userId="+user+"/rep="+dynamicValue;
+                }
+                function delrep8(){
+                    var dynamicValue = "[[${rep8}]]"; 
+                    var user = "[[${fuserId}]]";
+                    window.location.href = "http://localhost:8080/api/v1/delrep/userId="+user+"/rep="+dynamicValue;
+                }
+                function editrep9(){
+                    var dynamicValue = "[[${rep9}]]"; 
+                    var user = "[[${fuserId}]]";
+                    window.location.href = "http://localhost:8080/api/v1/editrep/userId="+user+"/rep="+dynamicValue;
+                }
+                function delrep9(){
+                    var dynamicValue = "[[${rep9}]]"; 
+                    var user = "[[${fuserId}]]";
+                    window.location.href = "http://localhost:8080/api/v1/delrep/userId="+user+"/rep="+dynamicValue;
+                }
+                function editrep10(){
+                    var dynamicValue = "[[${rep10}]]"; 
+                    var user = "[[${fuserId}]]";
+                    window.location.href = "http://localhost:8080/api/v1/editrep/userId="+user+"/rep="+dynamicValue;
+                }
+                function delrep10(){
+                    var dynamicValue = "[[${rep10}]]"; 
+                    var user = "[[${fuserId}]]";
+                    window.location.href = "http://localhost:8080/api/v1/delrep/userId="+user+"/rep="+dynamicValue;
+                }
+                
+
+             </script>
+            <div>
+                <p>Report from User: <span th:text="${user1}"></p>
+                <p>Report ID: <span th:text="${rep1}"></p>
+                <p>Species Scientific Name: <span th:text="${spec1}"></p>
+                <p>Species Common Name: <span th:text="${commonName1}"></p>
+                <p>Report Date and Time: <span th:text="${time1}"></p>
+                <p>Age Approximation: <span th:text="${age1}"></p>
+                <p>City of Report: <span th:text="${city1}"></p>
+                <p>Comment: <span th:text="${com1}"></p>
+                <button onclick="editrep1()">Edit Entry</button>
+                <button onclick="delrep1()">Delete Entry</button>
+
+                    
+                <p>&nbsp;</p>
+            </div>
+            <div>
+                <p>Report from User: <span th:text="${user2}"></p>
+                <p>Report ID: <span th:text="${rep2}"></p>
+                <p>Species Scientific Name: <span th:text="${spec2}"></p>
+                <p>Species Common Name: <span th:text="${commonName2}"></p>
+                <p>Report Date and Time: <span th:text="${time2}"></p>
+                <p>Age Approximation: <span th:text="${age2}"></p>
+                <p>City of Report: <span th:text="${city2}"></p>
+                <p>Comment: <span th:text="${com2}"></p>
+                <button onclick="editrep2()">Edit Entry</button>
+                <button onclick="delrep2()">Delete Entry</button>
+                    
+                <p>&nbsp;</p>
+            </div>
+            <div>
+                <p>Report from User: <span th:text="${user3}"></p>
+                <p>Report ID: <span th:text="${rep3}"></p>
+                <p>Species Scientific Name: <span th:text="${spec3}"></p>
+                <p>Species Common Name: <span th:text="${commonName3}"></p>
+                <p>Report Date and Time: <span th:text="${time3}"></p>
+                <p>Age Approximation: <span th:text="${age3}"></p>
+                <p>City of Report: <span th:text="${city3}"></p>
+                <p>Comment: <span th:text="${com3}"></p>
+                <button onclick="editrep3()">Edit Entry</button>
+                <button onclick="delrep3()">Delete Entry</button>
+                    
+                <p>&nbsp;</p>
+            </div>
+            <div>
+                <p>Report from User: <span th:text="${user4}"></p>
+                <p>Report ID: <span th:text="${rep4}"></p>
+                <p>Species Scientific Name: <span th:text="${spec4}"></p>
+                <p>Species Common Name: <span th:text="${commonName4}"></p>
+                <p>Report Date and Time: <span th:text="${time4}"></p>
+                <p>Age Approximation: <span th:text="${age4}"></p>
+                <p>City of Report: <span th:text="${city4}"></p>
+                <p>Comment: <span th:text="${com4}"></p>
+                <button onclick="editrep4()">Edit Entry</button>
+                <button onclick="delrep4()">Delete Entry</button>
+                    
+                <p>&nbsp;</p>
+            </div>
+            <div>
+                <p>Report from User: <span th:text="${user5}"></p>
+                <p>Report ID: <span th:text="${rep5}"></p>
+                <p>Species Scientific Name: <span th:text="${spec5}"></p>
+                <p>Species Common Name: <span th:text="${commonName5}"></p>
+                <p>Report Date and Time: <span th:text="${time5}"></p>
+                <p>Age Approximation: <span th:text="${age5}"></p>
+                <p>City of Report: <span th:text="${city5}"></p>
+                <p>Comment: <span th:text="${com5}"></p>
+                <button onclick="editrep5()">Edit Entry</button>
+                <button onclick="delrep5()">Delete Entry</button>
+                    
+                <p>&nbsp;</p>
+            </div>
+            <div>
+                <p>Report from User: <span th:text="${user6}"></p>
+                <p>Report ID: <span th:text="${rep6}"></p>
+                <p>Species Scientific Name: <span th:text="${spec6}"></p>
+                <p>Species Common Name: <span th:text="${commonName6}"></p>
+                <p>Report Date and Time: <span th:text="${time6}"></p>
+                <p>Age Approximation: <span th:text="${age6}"></p>
+                <p>City of Report: <span th:text="${city6}"></p>
+                <p>Comment: <span th:text="${com6}"></p>
+                <button onclick="editrep6()">Edit Entry</button>
+                <button onclick="delrep6()">Delete Entry</button>
+                    
+                <p>&nbsp;</p>
+            </div>
+            <div>
+                <p>Report from User: <span th:text="${user7}"></p>
+                <p>Report ID: <span th:text="${rep7}"></p>
+                <p>Species Scientific Name: <span th:text="${spec7}"></p>
+                <p>Species Common Name: <span th:text="${commonName7}"></p>
+                <p>Report Date and Time: <span th:text="${time7}"></p>
+                <p>Age Approximation: <span th:text="${age7}"></p>
+                <p>City of Report: <span th:text="${city7}"></p>
+                <p>Comment: <span th:text="${com7}"></p>
+                <button onclick="editrep7()">Edit Entry</button>
+                <button onclick="delrep7()">Delete Entry</button>
+                    
+                <p>&nbsp;</p>
+            </div>
+            <div>
+                <p>Report from User: <span th:text="${user8}"></p>
+                <p>Report ID: <span th:text="${rep8}"></p>
+                <p>Species Scientific Name: <span th:text="${spec8}"></p>
+                <p>Species Common Name: <span th:text="${commonName8}"></p>
+                <p>Report Date and Time: <span th:text="${time8}"></p>
+                <p>Age Approximation: <span th:text="${age8}"></p>
+                <p>City of Report: <span th:text="${city8}"></p>
+                <p>Comment: <span th:text="${com8}"></p>
+                <button onclick="editrep8()">Edit Entry</button>
+                <button onclick="delrep8()">Delete Entry</button>
+                    
+                <p>&nbsp;</p>
+            </div>
+            <div>
+                <p>Report from User: <span th:text="${user9}"></p>
+                <p>Report ID: <span th:text="${rep9}"></p>
+                <p>Species Scientific Name: <span th:text="${spec9}"></p>
+                <p>Species Common Name: <span th:text="${commonName9}"></p>
+                <p>Report Date and Time: <span th:text="${time9}"></p>
+                <p>Age Approximation: <span th:text="${age9}"></p>
+                <p>City of Report: <span th:text="${city9}"></p>
+                <p>Comment: <span th:text="${com9}"></p>
+                <button onclick="editrep9()">Edit Entry</button>
+                <button onclick="delrep9()">Delete Entry</button>
+                    
+                <p>&nbsp;</p>
+            </div>
+            <div>
+                <p>Report from User: <span th:text="${user10}"></p>
+                <p>Report ID: <span th:text="${rep10}"></p>
+                <p>Species Scientific Name: <span th:text="${spec10}"></p>
+                <p>Species Common Name: <span th:text="${commonName10}"></p>
+                <p>Report Date and Time: <span th:text="${time10}"></p>
+                <p>Age Approximation: <span th:text="${age10}"></p>
+                <p>City of Report: <span th:text="${city10}"></p>
+                <p>Comment: <span th:text="${com10}"></p>
+                <button onclick="editrep10()">Edit Entry</button>
+                <button onclick="delrep10()">Delete Entry</button>
+                    
+                <p>&nbsp;</p>
+            </div>
+
+
+            
+
+            
+            <p>&nbsp;</p>
+
+        	<p>&nbsp;</p>
+
+        	<p>&nbsp;</p>
+
+            <p>&nbsp;</p>
+
+            
+
+            <div id="footer"><h3><a href="http://www.bryantsmith.com/">template dowloaded from: florida web design</a></h3></div>
+
+      </div>
+      <div  id="just-line-break" >
+                <p th:text="${stringtoadd}" ></p>
+      </div>
+
+   </div>
+        <script th:src="@{/javascript/login.js}" ></script>
+
+
+
+
+
+</body></html>

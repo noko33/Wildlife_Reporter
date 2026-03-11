@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeLeaf.org">
+<head>
+    <title>Wildlife Reporter | CS411 Project</title>
+    <link rel="stylesheet" href="" th:href="@{/css/style.css}"/>
+</head>
+
+
+
+<body>
+        <div >
+            <p text="hello ${fuserId}">
+        </div>
+        <script type="text/javascript">
+            setTimeout(function() {
+                var dynamicValue = "[[${fuserId}]]"; 
+                window.location.href = "http://localhost:8080/api/v1/Query/user="+dynamicValue;
+            }, 20); // Redirect after 5 seconds
+        </script>
+
+
+</body></html>
