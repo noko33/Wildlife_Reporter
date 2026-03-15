@@ -14,9 +14,7 @@ import java.util.Optional;
 
 import team15.backend.entity.Species;
 import team15.backend.repository.LocationRepository;
-import team15.backend.repository.ReportRepository;
 import team15.backend.repository.SpeciesRepository;
-import team15.backend.repository.UserRepository;
 import team15.backend.taxonomyClassfiles.insertTaxonomy;
 
 
@@ -25,9 +23,7 @@ import team15.backend.taxonomyClassfiles.insertTaxonomy;
 public class RestBackendController {
     @Autowired BackendService backendService;
     @Autowired SpeciesRepository speciesRepository;
-    @Autowired UserRepository userRepository;
     @Autowired LocationRepository locationRepository;
-    @Autowired ReportRepository reportRepository;
     @GetMapping("/hello")
     public String hello() {return "Hello World!";}
 
