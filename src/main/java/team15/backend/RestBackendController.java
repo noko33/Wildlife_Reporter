@@ -48,7 +48,7 @@ public class RestBackendController {
     public String insertReports() {ins.insertReports(backendService, locationRepository); return "reports inserted";}
 
     @GetMapping("/updatelocs")
-    public String updatelocs() {System.out.println("checkpoint0");ins.updateLoc(backendService); return "locs updated";}
+    public String updatelocs() {ins.updateLoc(backendService); return "locs updated";}
 
     @GetMapping("/getspecies")
     public String getSpec() {return backendService.getrandomSpecies().getSpeciesId();}

@@ -16,15 +16,11 @@ import team15.backend.repository.LocationRepository;
 public class insertTaxonomy {
 
     public void updateLoc(BackendService backendService){
-        System.out.println("checkpoint1");
         List<Report> allreps = backendService.getAllReports();
-        System.out.println("checkpoint2");
         List<Location> alllocs = backendService.getallLocations();
-        System.out.println("checkpoint3");
         Report currReport;
         Location currLocation;
         for(int i =0;i<allreps.size();i++){
-            System.out.println("checkpoint4");
             currReport = allreps.get(i);
             currLocation = alllocs.get((int)Math.random()*alllocs.size());
             backendService.updateReportLocation(currReport.getReportId(),currLocation);
@@ -246,9 +242,7 @@ public class insertTaxonomy {
                 if(lineItems.length>45){
                     status = lineItems[45];
                 }
-                System.out.println(rank);
                 if(rank!=null && rank.equals("species")){
-                    System.out.println("checkponit 1");
                     if(status != null && status.equals("true")){
                         backendService.updateSpecies(Speciesname, genericname, true);
                     }else {

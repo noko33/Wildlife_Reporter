@@ -51,9 +51,7 @@ public class BackendService {
         return optionalEntity;
     }
     public List<Report> getAllReports(){
-        System.out.println("checkpoin1.5");
         List<Report> optionalEntity = reportRepository.findAll();
-        System.out.println("checkpoin1.7");
         return optionalEntity;
     }
 
