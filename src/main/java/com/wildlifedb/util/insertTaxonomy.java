@@ -10,7 +10,7 @@ import com.wildlifedb.entity.*;
 import java.util.List;
 import java.util.Random;
 
-import com.github.javafaker.*;
+import net.datafaker.Faker;
 import com.wildlifedb.repository.LocationRepository;
 
 public class insertTaxonomy {

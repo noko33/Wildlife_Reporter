@@ -4,7 +4,12 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +20,21 @@ import com.wildlifedb.entity.Report;
  * The configuration for DB is done in application.properties.
  */
 @Repository
-public interface ReportRepository extends JpaRepository<Report, Long> {
+public interface ReportRepository
+        extends JpaRepository<Report, Integer>, JpaSpecificationExecutor<Report> {
+
+    @Override
+    @EntityGraph(attributePaths = {
+            "user",
+            "species",
+            "species.genus",
+            "species.genus.family",
+            "species.genus.family.taxOrder",
+            "species.genus.family.taxOrder.taxonomyClass",
+            "species.genus.family.taxOrder.taxonomyClass.phylum",
+            "location"
+    })
+    Page<Report> findAll(Specification<Report> specification, Pageable pageable);
     
     /*
      This would return an Optional object which might have null or non-null value as its content.
