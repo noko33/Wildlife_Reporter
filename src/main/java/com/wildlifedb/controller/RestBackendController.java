@@ -6,18 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.Optional;
-
+import com.wildlifedb.api.ApiResponse;
 import com.wildlifedb.entity.Species;
+import com.wildlifedb.exception.ResourceNotFoundException;
 import com.wildlifedb.service.BackendService;
 import com.wildlifedb.repository.LocationRepository;
 import com.wildlifedb.repository.SpeciesRepository;
 import com.wildlifedb.util.insertTaxonomy;
-
 
 @RequestMapping("/api/v1")
 @RestController
@@ -25,37 +22,62 @@ public class RestBackendController {
     @Autowired BackendService backendService;
     @Autowired SpeciesRepository speciesRepository;
     @Autowired LocationRepository locationRepository;
+
     @GetMapping("/hello")
-    public String hello() {return "Hello World!";}
-
-    @GetMapping("/helloService")
-    public String helloService() {return backendService.hello();}
-
-    @GetMapping("/user")
-    public String addUser() {return backendService.addUser();}
-
-    insertTaxonomy ins = new insertTaxonomy();
-    @GetMapping("/insertCodex")
-    public String insertData() throws IOException {ins.insert(backendService); return "succsess";}
-
-    @GetMapping("/insertUsers")
-    public String insertusers() throws IOException {ins.insertUsers(backendService); return "users inserted";}
-
-    @GetMapping("/insertReports")
-    public String insertReports() {ins.insertReports(backendService, locationRepository); return "reports inserted";}
-
-    @GetMapping("/updatelocs")
-    public String updatelocs() {ins.updateLoc(backendService); return "locs updated";}
-
-    @GetMapping("/getspecies")
-    public String getSpec() {return backendService.getrandomSpecies().getSpeciesId();}
-
-    @GetMapping("/species/{id}")
-    public String getSpecSpec(@PathVariable String id) {
-        Optional<Species> n = speciesRepository.findBySpeciesId(id);
-        Species a = n.get();
-        return "ID: " + a.getSpeciesId()+ "\nGenus: "+a.getGenus().getGenusId()+"\nExtict Status: "+a.getExtinctStatus()+"\nCommon Name: "+a.getCommonName();
+    public ApiResponse<String> hello() {
+        return ApiResponse.success("Hello World!");
     }
 
+    @GetMapping("/helloService")
+    public ApiResponse<String> helloService() {
+        return ApiResponse.success(backendService.hello());
+    }
 
+    @GetMapping("/user")
+    public ApiResponse<String> addUser() {
+        return ApiResponse.success(backendService.addUser());
+    }
+
+    insertTaxonomy ins = new insertTaxonomy();
+
+    @GetMapping("/insertCodex")
+    public ApiResponse<String> insertData() throws IOException {
+        ins.insert(backendService);
+        return ApiResponse.success("succsess");
+    }
+
+    @GetMapping("/insertUsers")
+    public ApiResponse<String> insertusers() throws IOException {
+        ins.insertUsers(backendService);
+        return ApiResponse.success("users inserted");
+    }
+
+    @GetMapping("/insertReports")
+    public ApiResponse<String> insertReports() {
+        ins.insertReports(backendService, locationRepository);
+        return ApiResponse.success("reports inserted");
+    }
+
+    @GetMapping("/updatelocs")
+    public ApiResponse<String> updatelocs() {
+        ins.updateLoc(backendService);
+        return ApiResponse.success("locs updated");
+    }
+
+    @GetMapping("/getspecies")
+    public ApiResponse<String> getSpec() {
+        return ApiResponse.success(backendService.getrandomSpecies().getSpeciesId());
+    }
+
+    @GetMapping("/species/{id}")
+    public ApiResponse<String> getSpecSpec(@PathVariable String id) {
+        Species species = speciesRepository.findBySpeciesId(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Species not found with id: " + id));
+        String details = "ID: " + species.getSpeciesId()
+                + "\nGenus: " + species.getGenus().getGenusId()
+                + "\nExtict Status: " + species.getExtinctStatus()
+                + "\nCommon Name: " + species.getCommonName();
+        return ApiResponse.success(details);
+    }
 }
