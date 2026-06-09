@@ -2,8 +2,11 @@ package com.wildlifedb.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -14,11 +17,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.wildlifedb.api.PageResponse;
 import com.wildlifedb.dto.ObservationResponse;
+import com.wildlifedb.exception.ResourceNotFoundException;
 import com.wildlifedb.repository.UserRepository;
 import com.wildlifedb.security.JwtService;
 import com.wildlifedb.security.SecurityErrorResponseWriter;
@@ -136,5 +141,105 @@ class ObservationControllerTests {
                 .andExpect(jsonPath("$.message")
                         .value("page must be greater than or equal to 0"))
                 .andExpect(jsonPath("$.data").doesNotExist());
+    }
+
+    @Test
+    void createsObservationForAuthenticatedUser() throws Exception {
+        ObservationResponse response = observation();
+        when(observationService.createObservation(eq("owner@example.com"), any()))
+                .thenReturn(response);
+
+        mockMvc.perform(post("/observations")
+                        .principal(new TestingAuthenticationToken(
+                                "owner@example.com",
+                                null))
+                        .contentType("application/json")
+                        .content("""
+                                {
+                                  "speciesName": "Panthera leo",
+                                  "locationId": 7,
+                                  "observedAt": "2026-05-12T08:30:00Z",
+                                  "comment": "Adult animal near the river",
+                                  "ageApproximation": 4,
+                                  "longitude": -89.65,
+                                  "latitude": 39.78
+                                }
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(200))
+                .andExpect(jsonPath("$.message")
+                        .value("Observation created successfully"))
+                .andExpect(jsonPath("$.data.id").value(42))
+                .andExpect(jsonPath("$.data.speciesName").value("Panthera leo"));
+
+        verify(observationService).createObservation(eq("owner@example.com"), any());
+    }
+
+    @Test
+    void rejectsCreateRequestWithMissingSpecies() throws Exception {
+        mockMvc.perform(post("/observations")
+                        .principal(new TestingAuthenticationToken(
+                                "owner@example.com",
+                                null))
+                        .contentType("application/json")
+                        .content("""
+                                {
+                                  "locationId": 7,
+                                  "comment": "Missing species"
+                                }
+                                """))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value(400))
+                .andExpect(jsonPath("$.message").value("Request validation failed"))
+                .andExpect(jsonPath("$.data.speciesName").value("speciesName is required"));
+
+        verify(observationService, never()).createObservation(any(), any());
+    }
+
+    @Test
+    void returnsNotFoundWhenCreateReferencesMissingSpecies() throws Exception {
+        when(observationService.createObservation(eq("owner@example.com"), any()))
+                .thenThrow(new ResourceNotFoundException(
+                        "Species not found with name: Missing species"));
+
+        mockMvc.perform(post("/observations")
+                        .principal(new TestingAuthenticationToken(
+                                "owner@example.com",
+                                null))
+                        .contentType("application/json")
+                        .content("""
+                                {
+                                  "speciesName": "Missing species",
+                                  "locationId": 7
+                                }
+                                """))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.code").value(404))
+                .andExpect(jsonPath("$.message")
+                        .value("Species not found with name: Missing species"))
+                .andExpect(jsonPath("$.data").doesNotExist());
+    }
+
+    private ObservationResponse observation() {
+        return new ObservationResponse(
+                42,
+                "user-1",
+                "Panthera leo",
+                "Lion",
+                "Panthera",
+                "Felidae",
+                "Carnivora",
+                "Mammalia",
+                "Chordata",
+                "Animalia",
+                false,
+                "Adult animal near the river",
+                4,
+                OffsetDateTime.parse("2026-05-12T08:30:00Z"),
+                -89.65f,
+                39.78f,
+                "Springfield",
+                "IL",
+                "Grassland");
     }
 }
