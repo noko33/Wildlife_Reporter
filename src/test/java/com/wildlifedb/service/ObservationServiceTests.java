@@ -17,13 +17,23 @@ import org.springframework.data.jpa.domain.Specification;
 import com.wildlifedb.api.PageResponse;
 import com.wildlifedb.dto.ObservationResponse;
 import com.wildlifedb.entity.Report;
+import com.wildlifedb.repository.LocationRepository;
 import com.wildlifedb.repository.ReportRepository;
+import com.wildlifedb.repository.SpeciesRepository;
+import com.wildlifedb.repository.UserRepository;
 
 class ObservationServiceTests {
 
     private final ReportRepository reportRepository = mock(ReportRepository.class);
+    private final SpeciesRepository speciesRepository = mock(SpeciesRepository.class);
+    private final LocationRepository locationRepository = mock(LocationRepository.class);
+    private final UserRepository userRepository = mock(UserRepository.class);
     private final ObservationService observationService =
-            new ObservationService(reportRepository);
+            new ObservationService(
+                    reportRepository,
+                    speciesRepository,
+                    locationRepository,
+                    userRepository);
 
     @Test
     void rejectsNegativePage() {

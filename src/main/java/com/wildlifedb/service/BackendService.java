@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -24,6 +25,7 @@ public class BackendService {
     @Autowired TaxonomyClassRepository classRepository;
     @Autowired ReportRepository reportRepository;
     @Autowired LocationRepository locationRepository;
+    @Autowired PasswordEncoder passwordEncoder;
     public String hello() {
         return "Hello World from Service";
     }
@@ -213,7 +215,7 @@ public class BackendService {
         User newUser = new User();
         newUser.setUserId("userId1234");
         newUser.setEmail("email@email.com");
-        newUser.setPassword("someHashedPassword");
+        newUser.setPassword(passwordEncoder.encode("someHashedPassword"));
         newUser.setVerifier(true);
         userRepository.save(newUser);
         return "New user successfully created!";
@@ -222,7 +224,7 @@ public class BackendService {
         User newUser = new User();
         newUser.setUserId(userid);
         newUser.setEmail(email);
-        newUser.setPassword(password);
+        newUser.setPassword(passwordEncoder.encode(password));
         newUser.setVerifier(verifier);
         userRepository.save(newUser);
     }

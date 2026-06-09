@@ -23,8 +23,43 @@ This project was originally developed by Team 015 in CS 411 (Summer 2025):
 ## Features
 
 - User registration and login
+- BCrypt password hashing and stateless JWT authentication
 - Create, edit, delete, and verify wildlife sighting reports
 - Full taxonomy hierarchy (Phylum → Class → Order → Family → Genus → Species)
 - Species query and search
 - Geospatial location data with US city boundaries
 - Data seeding with 3000+ randomized reports
+
+## JWT Authentication
+
+The REST authentication endpoints are:
+
+- `POST /auth/register`
+- `POST /auth/login`
+
+Both endpoints return a JWT in `data.token`. Send it to protected Observation
+write endpoints with the following header:
+
+```text
+Authorization: Bearer <token>
+```
+
+Observation queries remain public. Creating, updating, and deleting observations
+requires authentication:
+
+- `POST /observations`
+- `PUT /observations/{id}`
+- `DELETE /observations/{id}`
+
+Configure a signing secret of at least 32 bytes before starting the application.
+The value must be kept outside source control in production:
+
+```powershell
+$env:JWT_SECRET = "replace-with-a-long-random-production-secret"
+$env:JWT_EXPIRATION_SECONDS = "3600"
+.\mvnw.cmd spring-boot:run
+```
+
+The default secret in `application.properties` is intended only for local
+development. Existing legacy plaintext passwords are upgraded to BCrypt after a
+successful login.

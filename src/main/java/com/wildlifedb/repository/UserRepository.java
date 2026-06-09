@@ -14,7 +14,7 @@ import com.wildlifedb.entity.User;
  * The configuration for DB is done in application.properties.
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Integer> {
     
     /*
      This would return an Optional object which might have null or non-null value as its content.
@@ -26,8 +26,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
      In order to add any custom query, use @Query annotation.
     */
     public Optional<User> findByEmail(String email); 
+    public Optional<User> findByEmailIgnoreCase(String email);
     public Optional<User> findByUserId(String user_id);
     public Optional<User> findById(int id); 
+    boolean existsByEmailIgnoreCase(String email);
+    boolean existsByUserId(String userId);
 
     @Query(value="select * from user where user.verifier =?1 ",nativeQuery=true)
     List<User> findAllverfied(Boolean verifier);

@@ -19,6 +19,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.wildlifedb.api.PageResponse;
 import com.wildlifedb.dto.ObservationResponse;
+import com.wildlifedb.repository.UserRepository;
+import com.wildlifedb.security.JwtService;
+import com.wildlifedb.security.SecurityErrorResponseWriter;
 import com.wildlifedb.service.ObservationService;
 
 @WebMvcTest(ObservationController.class)
@@ -30,6 +33,15 @@ class ObservationControllerTests {
 
     @MockitoBean
     private ObservationService observationService;
+
+    @MockitoBean
+    private JwtService jwtService;
+
+    @MockitoBean
+    private UserRepository userRepository;
+
+    @MockitoBean
+    private SecurityErrorResponseWriter securityErrorResponseWriter;
 
     @Test
     void returnsPagedObservationResponse() throws Exception {

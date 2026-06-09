@@ -3,6 +3,7 @@ package com.wildlifedb.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +26,7 @@ import com.wildlifedb.repository.SpeciesRepository;
 import com.wildlifedb.repository.UserRepository;
 import com.wildlifedb.entity.Location;
 import com.wildlifedb.service.BackendService;
+import com.wildlifedb.service.AuthService;
 
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeParseException;
@@ -39,6 +41,7 @@ public class BackendController {
     @Autowired UserRepository userRepository;
     @Autowired ReportRepository reportRepository;
     @Autowired LocationRepository locationRepository;
+    @Autowired AuthService authService;
 
     @GetMapping("/greeting")
     public String greeting(Model model) {
@@ -273,12 +276,12 @@ public class BackendController {
 
     @GetMapping("/login/email={femail}password={fpassword}")
     public String loggingint(@PathVariable("femail") String email, @PathVariable("fpassword") String password, Model model){
-        Optional<User> current = userRepository.findByEmail(email);
-        if(current.isPresent() && current.get().getPassword().equals(password)){
-            String userId = current.get().getUserId();
+        try {
+            User current = authService.authenticateUser(email, password);
+            String userId = current.getUserId();
             model.addAttribute("fuserId",userId);
             return "success";
-        }else{
+        } catch (AuthenticationException exception) {
             return "failure";
         }
     }
