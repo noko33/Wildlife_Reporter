@@ -14,7 +14,7 @@ This project was originally developed by Team 015 in CS 411 (Summer 2025):
 
 ## Tech Stack
 
-- **Backend:** Java 17, Spring Boot 3.5.3
+- **Backend:** Java 17, Spring Boot 3.4.0
 - **Database:** MySQL 8.0, Spring Data JPA
 - **Frontend:** Thymeleaf, HTML/CSS/JavaScript
 - **Geospatial:** GeoTools, JTS (Census shapefile processing)
@@ -63,3 +63,23 @@ $env:JWT_EXPIRATION_SECONDS = "3600"
 The default secret in `application.properties` is intended only for local
 development. Existing legacy plaintext passwords are upgraded to BCrypt after a
 successful login.
+
+## Swagger / OpenAPI
+
+Start the backend from PowerShell:
+
+```powershell
+cd "C:\Users\xiudo\Documents\wildlife reporter\backend"
+$env:JWT_SECRET = "replace-with-a-long-random-development-secret"
+.\mvnw.cmd spring-boot:run
+```
+
+After the application starts, open:
+
+- Swagger UI: `http://localhost:8080/swagger-ui.html`
+- OpenAPI JSON: `http://localhost:8080/v3/api-docs`
+
+Registration, login, and public Observation queries can be called directly from
+Swagger UI. For protected Observation write endpoints, log in first, copy
+`data.token`, select **Authorize**, and enter the token. Swagger UI adds the
+`Bearer` prefix automatically.

@@ -28,6 +28,8 @@ import com.wildlifedb.entity.Location;
 import com.wildlifedb.service.BackendService;
 import com.wildlifedb.service.AuthService;
 
+import io.swagger.v3.oas.annotations.Hidden;
+
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -35,6 +37,7 @@ import java.util.List;
 
 @RequestMapping("/api/v1")
 @Controller
+@Hidden
 public class BackendController {
     @Autowired BackendService backendService;
     @Autowired SpeciesRepository speciesRepository;

@@ -20,6 +20,7 @@
         <geotools.version>29.2</geotools.version>
         <jts.version>1.19.0</jts.version>
         <jjwt.version>0.12.5</jjwt.version>
+        <springdoc.version>2.7.0</springdoc.version>
     </properties>
 
     <dependencies>
@@ -84,7 +85,7 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.3.0</version>
+            <version>${springdoc.version}</version>
         </dependency>
 
         <!-- ===== Geospatial ===== -->

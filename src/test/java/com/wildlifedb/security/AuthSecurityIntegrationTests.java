@@ -127,6 +127,24 @@ class AuthSecurityIntegrationTests {
     }
 
     @Test
+    void openApiDocumentationIsPublic() throws Exception {
+        mockMvc.perform(get("/v3/api-docs"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.info.title").value("Wildlife Reporter API"))
+                .andExpect(jsonPath("$.components.securitySchemes.bearerAuth.type")
+                        .value("http"))
+                .andExpect(jsonPath("$.paths['/observations'].get").exists())
+                .andExpect(jsonPath("$.paths['/observations'].post.security[0].bearerAuth")
+                        .isArray());
+    }
+
+    @Test
+    void swaggerUiIsPublic() throws Exception {
+        mockMvc.perform(get("/swagger-ui.html"))
+                .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
     void protectedObservationWriteRequiresToken() throws Exception {
         mockMvc.perform(post("/observations")
                         .contentType(MediaType.APPLICATION_JSON)
