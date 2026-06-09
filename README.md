@@ -83,3 +83,73 @@ Registration, login, and public Observation queries can be called directly from
 Swagger UI. For protected Observation write endpoints, log in first, copy
 `data.token`, select **Authorize**, and enter the token. Swagger UI adds the
 `Bearer` prefix automatically.
+
+## Docker Compose
+
+The local Docker environment runs two services:
+
+- `app`: the Spring Boot backend on port `8080`
+- `mysql`: MySQL 8.0 on port `3306`
+
+Docker Desktop must be running. Start both services from PowerShell:
+
+```powershell
+cd "C:\Users\xiudo\Documents\wildlife reporter\backend"
+docker compose up --build
+```
+
+Run in the background:
+
+```powershell
+docker compose up --build -d
+docker compose logs -f app
+```
+
+After startup:
+
+- Application: `http://localhost:8080`
+- Swagger UI: `http://localhost:8080/swagger-ui.html`
+- OpenAPI JSON: `http://localhost:8080/v3/api-docs`
+- MySQL: `localhost:3306`
+
+The default development database settings are:
+
+| Setting | Default |
+| --- | --- |
+| Database | `wildlife` |
+| Application user | `wildlife` |
+| Application password | `wildlife_dev_password` |
+| Root password | `root_dev_password` |
+
+Override defaults with PowerShell environment variables before starting:
+
+```powershell
+$env:MYSQL_DATABASE = "wildlife"
+$env:MYSQL_USER = "wildlife"
+$env:MYSQL_PASSWORD = "replace-this-database-password"
+$env:MYSQL_ROOT_PASSWORD = "replace-this-root-password"
+$env:JWT_SECRET = "replace-with-a-random-secret-of-at-least-32-bytes"
+$env:APP_PORT = "8080"
+$env:MYSQL_PORT = "3306"
+docker compose up --build -d
+```
+
+MySQL data is persisted in the `mysql_data` Docker volume. The project currently
+has no SQL migration or seed file; Hibernate creates and updates the schema using
+`spring.jpa.hibernate.ddl-auto=update`.
+
+Stop the services while keeping database data:
+
+```powershell
+docker compose down
+```
+
+Delete the services and all local database data:
+
+```powershell
+docker compose down -v
+```
+
+For running Spring Boot outside Docker, the defaults remain
+`jdbc:mysql://localhost:3306/test`, username `test`, and password `test`. They
+can be overridden with `DB_URL`, `DB_USERNAME`, and `DB_PASSWORD`.
