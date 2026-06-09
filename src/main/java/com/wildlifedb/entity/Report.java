@@ -6,15 +6,29 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@Table(indexes = {
+    @Index(name = "idx_report_date_id", columnList = "date_time, report_id"),
+    @Index(
+            name = "idx_report_species_date_id",
+            columnList = "species, date_time, report_id"),
+    @Index(
+            name = "idx_report_location_date_id",
+            columnList = "location_id, date_time, report_id"),
+    @Index(
+            name = "idx_report_user_date_id",
+            columnList = "user_id, date_time, report_id")
+})
 @Getter
 @Setter
 @AllArgsConstructor

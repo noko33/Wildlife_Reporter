@@ -9,6 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +18,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@Table(indexes = {
+    @Index(name = "idx_location_city", columnList = "city")
+})
 @Getter
 @Setter
 @AllArgsConstructor

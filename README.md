@@ -153,3 +153,10 @@ docker compose down -v
 For running Spring Boot outside Docker, the defaults remain
 `jdbc:mysql://localhost:3306/test`, username `test`, and password `test`. They
 can be overridden with `DB_URL`, `DB_USERNAME`, and `DB_PASSWORD`.
+
+## Database Indexes
+
+Observation, Species, Location, and Taxonomy indexes are documented in
+[`docs/database-indexes.md`](docs/database-indexes.md). The document maps each
+index to its query path and includes a DataFaker-based query timing procedure
+for larger datasets.
